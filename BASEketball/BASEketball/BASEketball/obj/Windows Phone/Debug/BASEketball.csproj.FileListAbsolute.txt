@@ -1,0 +1,17 @@
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\Content\BBall.xnb
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\BASEketball.dll
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\BASEketball.pdb
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\SimpleLibrary.dll
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\BASEketball.dll
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\BASEketball.pdb
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\AppManifest.xaml
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\WMAppManifest.xml.g
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\WMAppManifest.xml
+bin\Windows Phone\Debug\
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\BASEketball.xap
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\obj\Windows Phone\Debug\XapCacheFile.xml
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\Content\bounce.xnb
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\Content\TouchMarker.xnb
+C:\Users\Griffin\BASEketball\BASEketball\BASEketball\BASEketball\bin\Windows Phone\Debug\Content\Beep.xnb

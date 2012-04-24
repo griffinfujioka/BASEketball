@@ -1,0 +1,6 @@
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="BASEketball" EntryPointType="BASEketball.Game1" RuntimeVersion="3.0">
+  <Deployment.Parts>
+    <AssemblyPart x:Name="BASEketball" Source="BASEketball.dll" />
+    <AssemblyPart x:Name="SimpleLibrary" Source="SimpleLibrary.dll" />
+  </Deployment.Parts>
+</Deployment>

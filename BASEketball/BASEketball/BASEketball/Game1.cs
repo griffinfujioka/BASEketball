@@ -38,6 +38,12 @@ namespace BASEketball
 
         #endregion 
 
+        #region Audio and effect support
+        // Audio stuff...
+        SoundEffect mBeep;              // Sound effect when bouncing off window boundaries
+        #endregion
+
+
         public Game1()
         {
             #region usual XNA graphics initialization 
@@ -92,7 +98,9 @@ namespace BASEketball
                                          GestureType.Flick |
                                          GestureType.Pinch |
                                          GestureType.FreeDrag |
-                                         GestureType.PinchComplete;
+                                         GestureType.PinchComplete | 
+                                         GestureType.Tap
+                                         ;
             #endregion
 
 
@@ -119,8 +127,14 @@ namespace BASEketball
             mMarker2.IsVisible = false;
 
             // Label L2b: Loads the font
-            DrawFont.LoadFont(Content);
+            //DrawFont.LoadFont(Content);
             #endregion
+
+            #region Label L3 content loading for audio/sound effect support
+            // Loads audio effets and start background music
+            mBeep = Content.Load<SoundEffect>("Beep");
+            #endregion 
+
 
         }
 
@@ -140,6 +154,119 @@ namespace BASEketball
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            #region Label U1: use Touch Location to check for selection
+
+            //obtain all of the devices TouchLocations
+            TouchCollection touchCollection = TouchPanel.GetState();
+            //check each of the devices TouchLocations;
+            foreach (TouchLocation tl in touchCollection)
+            {
+                /*
+                    * Utilize the touch location state.
+                    *   -TouchLocationState.Invalid is when the location's position is invalid. Could be when a new
+                    *   touch location attempts to get the previous location of itself.
+                    *   -TouchLocationState.Moved is when the touch location position was updated or pressed in the same position.
+                    *   -TouchLocationState.Pressed is when the touch location position is new.
+                    *   -TouchLocationState.Released is when the location position was released.
+                */
+                switch (tl.State)
+                {
+                    case TouchLocationState.Pressed:
+                        // Priotize the selction
+                        // System.Diagnostics.Debug.WriteLine("Pressed: TouchID=" + tl.Id);
+                        mCurrentSelected = null;
+                        if (mBall.Selected(tl.Position))
+                            mCurrentSelected = mBall;
+                        break;
+
+                    case TouchLocationState.Moved:
+                        // with TouchID, will not "drop" the image when movement is very fast!
+                        // if (null != mCurrentSelected)
+                        //    mCurrentSelected.DragTo(tl.Id, tl.Position);
+                        //
+                        // One should not mix touch.Move with gesture. 
+                        //   here we are working with Gesture, so, check for FreeDrag
+                        break;
+
+                    case TouchLocationState.Released:
+                        if (null != mCurrentSelected)
+                            mCurrentSelected.UnSelect();
+
+                        mCurrentSelected = null;
+                        break;
+                }
+            }
+            #endregion
+
+            
+
+            #region Label U2: Working with gesture: on selected image
+            while (TouchPanel.IsGestureAvailable)
+            {
+                //detect any gestures that were performed
+                GestureSample gesture = TouchPanel.ReadGesture();
+                //do code depending on which gesture was detected
+                switch (gesture.GestureType)
+                {
+                    case GestureType.Pinch:
+                        // Only work with mBg image. 
+                        // Sets the markers to be visible and at pinch position
+                        mMarker1.IsVisible = true;
+                        mMarker2.IsVisible = true;
+                        mMarker1.SetPositionTo(gesture.Position);
+                        mMarker2.SetPositionTo(gesture.Position2);
+                        break;
+                    case GestureType.PinchComplete:
+                        // now hid the markers
+                        mMarker1.IsVisible = false;
+                        mMarker2.IsVisible = false;
+                        break;
+
+                    case GestureType.FreeDrag:
+                        // drags which the selected image 
+                        if (null != mCurrentSelected)
+                            mCurrentSelected.SetPositionTo(gesture.Position);
+                        break;
+
+                    case GestureType.DoubleTap:
+                        break;
+
+                    case GestureType.Tap:
+                        // Always reposition the ball
+                        mBall.SetPositionTo(gesture.Position);
+                        mBall.SetVelocity(Vector2.Zero);
+                        mBeep.Play();
+                        break;
+
+                    case GestureType.Hold:
+                        // Always reposition the ball
+                        mBall.SetPositionTo(gesture.Position);
+                        mBall.SetVelocity(Vector2.Zero);
+                        mBeep.Play();
+                        break;
+
+                    case GestureType.Flick:
+                        // Transfer the flick-delta to the ball, 
+                        //         scale down the veocity to have 
+                        //         a resonable speed for the ball
+                        if (mBall == mCurrentSelected)
+                            mBall.SetVelocity(gesture.Delta * 0.2f);
+                        break;
+                }
+            }
+            #endregion
+
+            #region Label U3: In case the ball is kicked
+            mBall.Update();
+            #endregion
+
+            #region Label U4: Usual XNA stuff: Allows the game to exit and base.Update
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+
+            base.Update(gameTime);
+            #endregion 
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -155,7 +282,16 @@ namespace BASEketball
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            #region Label R1: Draw all objects and display the font.
+            GraphicsDevice.Clear(Color.Crimson);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+            mBall.Draw(spriteBatch);
+
+            mMarker1.Draw(spriteBatch);  // may or may not draw anything
+            mMarker2.Draw(spriteBatch);
+            spriteBatch.End();
+            #endregion 
 
             // TODO: Add your drawing code here
 
